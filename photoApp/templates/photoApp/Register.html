@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}Registration page{% endblock %}
+{% block body %}
+    <form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+        {{ form.non_field_errors }}
+        <p>Username: {{ form.email }}</p>
+        {{ form.email.errors }}
+
+        <p>Password: {{ form.password }}</p>
+
+        <p>Confirmation:{{ form.confirmation }}</p>
+
+        <input type="submit" value="Register">
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
+
+{% endblock %}
