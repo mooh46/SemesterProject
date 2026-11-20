@@ -1,18 +1,26 @@
 {% extends 'layout.html' %}
 {% block title %}Registration page{% endblock %}
 {% block body %}
+    <div class="auth-card">
     <form action="{% url 'register' %}" method="post">
     {% csrf_token %}
         {{ form.non_field_errors }}
         <p>Username: {{ form.email }}</p>
         {{ form.email.errors }}
 
+
+
+
         <p>Password: {{ form.password }}</p>
+
+
 
         <p>Confirmation:{{ form.confirmation }}</p>
 
-        <input type="submit" value="Register">
+
+        <input type="submit" value="Register" class="btn btn-brand">
+        <p>Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
     </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Log In here.</a></p>
+    </div>
 
 {% endblock %}

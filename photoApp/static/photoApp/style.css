@@ -1,0 +1,19 @@
+body {
+    background: linear-gradient(180deg, #d63384 0%, #f8d7ea 60%, #e9d5ff 100%) fixed;
+}
+.auth-card {
+    max-width: 400px;
+    margin: 72px auto;
+    padding: 32px;
+    background: #fff;
+    border-radius: 16px;
+}
+.btn-brand {
+    background: linear-gradient(135deg, #be185d, #9333ea);
+    color: #fff;
+    border: 0;
+}
+.btn-brand:hover {
+    color: #fff;
+    opacity: .9;
+}

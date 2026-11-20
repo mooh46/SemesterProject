@@ -4,9 +4,11 @@ from .forms import *
 from .models import *
 from django.urls import reverse
 from django.contrib.auth import login, logout,authenticate
+from django.contrib.auth.decorators import login_required
 
 
 
+@login_required
 def feed(request):
     return render(request,'photoApp/feed.html')
 
@@ -27,6 +29,10 @@ def log_in(request):
         if form.is_valid():
             user = authenticate(request ,username=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
+                #web has no memory between requests
+                #when this runs django gives the  user a session id which is used to identify a row in a table in the database called django_session
+                # which  has the user's userid so this session id is stored in a cookie in the browser
+                # so the browser uses that id to get the user id which is then used to get a users details in users table
                 login(request,user)
                 return HttpResponseRedirect(reverse('feed'))
             form.add_error(None, "Invalid username and/or password.")
