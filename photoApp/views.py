@@ -16,6 +16,7 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            #create_user hashes our password before storing it
             user  =  User.objects.create_user(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
             login(request,user)
             return HttpResponseRedirect(reverse('feed'))
@@ -44,3 +45,17 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
+
+@login_required
+def new_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return HttpResponseRedirect(reverse("feed"))
+
+    else:
+        form = PostForm()
+    return render(request,'photoApp/new_post.html',{'form':form})

@@ -120,6 +120,12 @@ LOGIN_URL = "login"
 
 STATIC_URL = 'static/'
 
+#MEDIA_ROOT: Specifies the physical folder where uploaded files are stored.
+#MEDIA_URL: Specifies the URL used to access those files.
+#pillow library installed to help process photos, image field relies on pillow to process images
+MEDIA_URL = '/media/' #tells django the URL prefix that can be used to access the image
+
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

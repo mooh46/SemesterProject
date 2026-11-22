@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}New post{% endblock %}
+{% block body %}
+<main class="auth-card" style="max-width: 520px">
+    <h1>New post</h1>
+    <p class="text-secondary">Pick a picture and add a caption if you like.</p>
+    <form action="{% url 'new_post' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <p><b>Picture:</b> {{ form.picture }}</p>
+            {{ form.picture.errors }}
+        <p><b>Caption:</b> {{ form.caption }}</p>
+            {{ form.caption.errors }}
+
+        <button type="submit" class="btn btn-brand">Post</button>
+    </form>
+</main>
+{% endblock %}

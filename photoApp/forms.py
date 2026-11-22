@@ -1,6 +1,6 @@
 from django import forms
 
-from photoApp.models import User
+from photoApp.models import User, Post
 
 
 class RegisterForm(forms.Form):
@@ -23,6 +23,20 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("Email already exists")
         return email
 
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('picture','caption')
+
+    def  clean_picture(self):
+        picture = self.cleaned_data['picture']
+        #convert into bytes since picture gives file size in bytes
+        if picture.size > 5 * 1024 * 1024:
+            raise forms.ValidationError("Picture must be 5MB or smaller")
+        if picture.content_type not in ('image/jpeg', 'image/png' ):
+            raise forms.ValidationError("Picture must be jpg or png")
+        return picture
 
 
 class LoginForm(forms.Form):
