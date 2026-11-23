@@ -17,3 +17,29 @@ body {
     color: #fff;
     opacity: .9;
 }
+
+
+.post-card {
+    max-width: 520px;
+    margin: 24px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, .08);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .05);
+}
+.post-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.post-author { font-weight: 700; }
+.post-date { color: #64748b; font-size: 14px; }
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center ;
+
+}

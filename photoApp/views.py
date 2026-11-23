@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def feed(request):
-    return render(request,'photoApp/feed.html')
+    posts = Post.objects.all().order_by('-date_posted')
+    return render(request,'photoApp/feed.html',{'posts':posts})
 
 def register(request):
     if request.method == 'POST':
@@ -59,3 +60,5 @@ def new_post(request):
     else:
         form = PostForm()
     return render(request,'photoApp/new_post.html',{'form':form})
+
+

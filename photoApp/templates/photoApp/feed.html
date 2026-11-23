@@ -1,15 +1,32 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<h1>Welcome to The Feed</h1>
-<a href="{% url 'logout' %}">Logout</a>
-<a href="{% url 'new_post' %}">New Post</a>
-</body>
-</html>
+{% extends 'layout.html'%}
+{% block title %}Feed{% endblock %}
+{% block body %}
+
+   <nav class="navbar bg-white border-bottom px-3">
+    <a class="navbar-brand" href="{% url 'feed' %}">PhotoShare</a>
+    <p class="navbar-brand ">Welcome to the Feed page</p>
+    {% if user.is_authenticated %}
+    <div>
+        <a href="{% url 'new_post' %}" class="btn btn-brand w-auto px-3">New post</a>
+        <a href="{% url 'logout' %}" class="btn btn-brand w-auto px-3">Logout</a>
+    </div>
+    {% endif %}
+</nav>
+    {% for post in posts %}
+
+        <div class="post-card">
+           <div class="mb-3 d-flex justfy-content-between">
+               <span class="post-author">{{ post.author }}</span>
+               <span class="post-date">{{ post.date_posted|date:"j M Y" }}</span>
+           </div>
+            <div class="mb-3">
+                <img src="{{ post.picture.url }}" alt="post picture" class="post-image">
+            </div>
+            <div class="mb-3">
+                {{ post.caption }}
+            </div>
+
+        </div>
+    {% endfor %}
+
+{% endblock %}
