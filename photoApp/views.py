@@ -1,17 +1,25 @@
-from django.shortcuts import render
+from django.core import paginator
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import *
 from .models import *
 from django.urls import reverse
 from django.contrib.auth import login, logout,authenticate
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 
 
 @login_required
 def feed(request):
     posts = Post.objects.all().order_by('-date_posted')
-    return render(request,'photoApp/feed.html',{'posts':posts})
+    paginata =  Paginator(posts, 10)
+    #request.GET gives us access to the url parameters and get, gets us the value of associated with page
+    # then get_page takes that number and gets the value associated with that page
+    #this gives us a page object with the number
+    page_obj = paginata.get_page(request.GET.get('Page'))
+    #from this Paginator object called paginata we use get_page which creates a Page object
+    return render(request,'photoApp/feed.html',{'page_obj':page_obj})
 
 def register(request):
     if request.method == 'POST':
@@ -60,5 +68,16 @@ def new_post(request):
     else:
         form = PostForm()
     return render(request,'photoApp/new_post.html',{'form':form})
+
+
+def profile(request,user_id):
+    #a profile needs the username and the post right
+    profile_user =  get_object_or_404(User,pk = user_id)
+    posts = profile_user.posts.all().order_by('-date_posted')
+
+    return render(request,"photoApp/profile.html",{
+        "profile_user":profile_user,
+        "posts":posts,
+    })
 
 

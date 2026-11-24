@@ -9,14 +9,15 @@
     <div>
         <a href="{% url 'new_post' %}" class="btn btn-brand w-auto px-3">New post</a>
         <a href="{% url 'logout' %}" class="btn btn-brand w-auto px-3">Logout</a>
+        <a href="{% url 'profile' user.id %}" class="btn btn-brand w-auto px-3">My profile</a>
     </div>
     {% endif %}
 </nav>
-    {% for post in posts %}
+    {% for post in page_obj %}
 
         <div class="post-card">
            <div class="mb-3 d-flex justfy-content-between">
-               <span class="post-author">{{ post.author }}</span>
+               <a class="post-author text-decoration-none text-dark" href="{% url 'profile' post.author.id %}">{{ post.author }}</a>
                <span class="post-date">{{ post.date_posted|date:"j M Y" }}</span>
            </div>
             <div class="mb-3">
@@ -28,5 +29,15 @@
 
         </div>
     {% endfor %}
+    <div class="post-card d-flex justify-content-between">
+    {% if page_obj.has_previous %}
+        <a class="auth-link" href="?Page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+        <span>{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a class="auth-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+    </div>
 
 {% endblock %}
