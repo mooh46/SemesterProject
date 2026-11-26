@@ -13,11 +13,11 @@ from django.core.paginator import Paginator
 @login_required
 def feed(request):
     posts = Post.objects.all().order_by('-date_posted')
-    paginata =  Paginator(posts, 10)
+    paginata =  Paginator(posts, 2)
     #request.GET gives us access to the url parameters and get, gets us the value of associated with page
     # then get_page takes that number and gets the value associated with that page
     #this gives us a page object with the number
-    page_obj = paginata.get_page(request.GET.get('Page'))
+    page_obj = paginata.get_page(request.GET.get('page'))
     #from this Paginator object called paginata we use get_page which creates a Page object
     return render(request,'photoApp/feed.html',{'page_obj':page_obj})
 
